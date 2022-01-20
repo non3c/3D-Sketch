@@ -36,116 +36,132 @@ void draw() {
 
   noStroke();
   drawGround();
-  controlCamera();
-  texturedBlock(shroomlight, shroomlight, goldblock, goldblock, netheriteblock, netheriteblock, 0, 0, 0);
+  //controlCamera();
+
   popMatrix();
+  texturedBlock(0, 0, 0, shroomlight, shroomlight, goldblock, goldblock, netheriteblock, netheriteblock, 200);
 }
 
-void blocks(int x, int y, int z, PImage tex) {
+void texturedBlock(int x, int y, int z, PImage tex, float size) {
+  pushMatrix();
+  translate(x, y, z);
+  scale(size);
+  noStroke();
+
   beginShape(QUADS);
   texture(tex);
   //top
   //     x, y, z, tx, ty
-  vertex(x, y, z, 0, 0);
-  vertex(x+1, y, z, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x, y, z+1, 0, 1);
+  vertex(0, 0, 0, 0, 0);
+  vertex(1, 0, 0, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(0, 0, 1, 0, 1);
 
   //bottom
-  vertex(x, y+1, z, 0, 0);
-  vertex(x+1, y+1, z, 1, 0);
-  vertex(x+1, y+1, z+1, 1, 1);
-  vertex(x, y+1, z+1, 0, 1);
+  vertex(0, 1, 0, 0, 0);
+  vertex(1, 1, 0, 1, 0);
+  vertex(1, 1, 1, 1, 1);
+  vertex(0, 1, 1, 0, 1);
 
   //front
-  vertex(x, y+1, z+1, 0, 0);
-  vertex(x+1, y+1, z+1, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x, y, z+1, 0, 1);
+  vertex(0, 1, 1, 0, 0);
+  vertex(1, 1, 1, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(0, 0, 1, 0, 1);
 
 
   //back 
-  vertex(x, y+1, z, 0, 0);
-  vertex(x+1, y+1, z, 1, 0);
-  vertex(x+1, y, z, 1, 1);
-  vertex(x, y, z, 0, 1);
+  vertex(0, 1, 0, 0, 0);
+  vertex(1, 1, 0, 1, 0);
+  vertex(1, 0, 0, 1, 1);
+  vertex(0, 0, 0, 0, 1);
 
   //left
-  vertex(x, y+1, z, 0, 0);
-  vertex(x, y+1, z+1, 1, 0);
-  vertex(x, y, z+1, 1, 1);
-  vertex(x, y, z, 0, 1);
+  vertex(0, 1, 0, 0, 0);
+  vertex(0, 1, 1, 1, 0);
+  vertex(0, 0, 1, 1, 1);
+  vertex(0, 0, 0, 0, 1);
   //right
-  vertex(x+1, y+1, z, 0, 0);
-  vertex(x+1, y+1, z+1, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x+1, y, z, 0, 1);
+  vertex(1, 1, 0, 0, 0);
+  vertex(1, 1, 1, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(1, 0, 0, 0, 1);
 
   endShape();
+  popMatrix();
 }
 
-void texturedBlock(PImage top, PImage bottom, PImage front, PImage back, PImage left, PImage right, int x, int y, int z) {
+void texturedBlock(int x, int y, int z, PImage top, PImage bottom, PImage front, PImage back, PImage left, PImage right, int size) {
+  pushMatrix();
+  translate(x, y, z);
+  scale(size);
+  noStroke();
+
   beginShape(QUADS);
   texture(top);
-  //     x, y, z, tx, ty
   //top
-  vertex(x, y, z, 0, 0);
-  vertex(x+1, y, z, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x, y, z+1, 0, 1);
+  //     x, y, z, tx, ty
+  vertex(0, 0, 0, 0, 0);
+  vertex(1, 0, 0, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(0, 0, 1, 0, 1);
+  endShape();
+
+
+  beginShape(QUADS);
+  texture(bottom);
+  //bottom
+  vertex(0, 1, 0, 0, 0);
+  vertex(1, 1, 0, 1, 0);
+  vertex(1, 1, 1, 1, 1);
+  vertex(0, 1, 1, 0, 1);
   endShape();
 
   beginShape(QUADS);   
-  texture(bottom);
-  //bottom
-  vertex(x, y+1, z, 0, 0);
-  vertex(x+1, y+1, z, 1, 0);
-  vertex(x+1, y+1, z+1, 1, 1);
-  vertex(x, y+1, z+1, 0, 1);
-  endShape();
-
-  beginShape(QUADS);  
   texture(front);
   //front
-  vertex(x, y+1, z+1, 0, 0);
-  vertex(x+1, y+1, z+1, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x, y, z+1, 0, 1);
+  vertex(0, 1, 1, 0, 0);
+  vertex(1, 1, 1, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(0, 0, 1, 0, 1);
   endShape();
 
   beginShape(QUADS);   
   texture(back);
   //back 
-  vertex(x, y+1, z, 0, 0);
-  vertex(x+1, y+1, z, 1, 0);
-  vertex(x+1, y, z, 1, 1);
-  vertex(x, y, z, 0, 1);
+  vertex(0, 1, 0, 0, 0);
+  vertex(1, 1, 0, 1, 0);
+  vertex(1, 0, 0, 1, 1);
+  vertex(0, 0, 0, 0, 1);
   endShape();
 
   beginShape(QUADS);   
   texture(left);
+
   //left
-  vertex(x, y+1, z, 0, 0);
-  vertex(x, y+1, z+1, 1, 0);
-  vertex(x, y, z+1, 1, 1);
-  vertex(x, y, z, 0, 1);
+  vertex(0, 1, 0, 0, 0);
+  vertex(0, 1, 1, 1, 0);
+  vertex(0, 0, 1, 1, 1);
+  vertex(0, 0, 0, 0, 1);
   endShape();
 
+  //right
   beginShape(QUADS);   
   texture(right);
-  //right
-  vertex(x+1, y+1, z, 0, 0);
-  vertex(x+1, y+1, z+1, 1, 0);
-  vertex(x+1, y, z+1, 1, 1);
-  vertex(x+1, y, z, 0, 1);
+  vertex(1, 1, 0, 0, 0);
+  vertex(1, 1, 1, 1, 0);
+  vertex(1, 0, 1, 1, 1);
+  vertex(1, 0, 0, 0, 1);
+
   endShape();
+  popMatrix();
 }
 
 void drawGround() {
   noLoop();
   int x = -20, y = -20;
   while (x <= 20) {
-    blocks(x, 2, y, netheriteblock);
+    texturedBlock(x, 2, y, netheriteblock, 200);
     x = x + 1;
     if (x >= 20) {
       y = y + 1;
@@ -155,17 +171,17 @@ void drawGround() {
   }
 }
 
-void controlCamera() {
-  camera(eyeX, eyeY, eyeZ, focusX, focusY, focusZ, tiltX, tiltY, tiltZ);
-  if (wkey) eyeZ += 10;
-  if (skey) eyeZ -= 10;
-  if (akey) eyeX += 10;
-  if (dkey) eyeX -= 10;
+//void controlCamera() {
+//  camera(eyeX, eyeY, eyeZ, focusX, focusY, focusZ, tiltX, tiltY, tiltZ);
+//  if (wkey) eyeZ += 10;
+//  if (skey) eyeZ -= 10;
+//  if (akey) eyeX += 10;
+//  if (dkey) eyeX -= 10;
 
-  focusX = eyeX;
-  focusY = eyeY;
-  focusZ = eyeZ + 10;
-}
+//  focusX = eyeX;
+//  focusY = eyeY;
+//  focusZ = eyeZ + 10;
+//}
 
 void keyPressed() {
   if (keyCode == 'W')        wkey = true;
