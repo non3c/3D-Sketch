@@ -30,15 +30,15 @@ void draw() {
   pushMatrix();
   translate(width/2, height/2, 0);
   scale(100);
-  //rotateX(rotx);
-  //rotateY(roty);
+
+  rotateX(rotx);
+  rotateY(roty);
 
   noStroke();
   drawGround();
-  
-
-  popMatrix();
   controlCamera();
+  texturedBlock(shroomlight, shroomlight, goldblock, goldblock, netheriteblock, netheriteblock, 0, 0, 0);
+  popMatrix();
 }
 
 void blocks(int x, int y, int z, PImage tex) {
@@ -84,16 +84,74 @@ void blocks(int x, int y, int z, PImage tex) {
   endShape();
 }
 
+void texturedBlock(PImage top, PImage bottom, PImage front, PImage back, PImage left, PImage right, int x, int y, int z) {
+  beginShape(QUADS);
+  texture(top);
+  //     x, y, z, tx, ty
+  //top
+  vertex(x, y, z, 0, 0);
+  vertex(x+1, y, z, 1, 0);
+  vertex(x+1, y, z+1, 1, 1);
+  vertex(x, y, z+1, 0, 1);
+  endShape();
+
+  beginShape(QUADS);   
+  texture(bottom);
+  //bottom
+  vertex(x, y+1, z, 0, 0);
+  vertex(x+1, y+1, z, 1, 0);
+  vertex(x+1, y+1, z+1, 1, 1);
+  vertex(x, y+1, z+1, 0, 1);
+  endShape();
+
+  beginShape(QUADS);  
+  texture(front);
+  //front
+  vertex(x, y+1, z+1, 0, 0);
+  vertex(x+1, y+1, z+1, 1, 0);
+  vertex(x+1, y, z+1, 1, 1);
+  vertex(x, y, z+1, 0, 1);
+  endShape();
+
+  beginShape(QUADS);   
+  texture(back);
+  //back 
+  vertex(x, y+1, z, 0, 0);
+  vertex(x+1, y+1, z, 1, 0);
+  vertex(x+1, y, z, 1, 1);
+  vertex(x, y, z, 0, 1);
+  endShape();
+
+  beginShape(QUADS);   
+  texture(left);
+  //left
+  vertex(x, y+1, z, 0, 0);
+  vertex(x, y+1, z+1, 1, 0);
+  vertex(x, y, z+1, 1, 1);
+  vertex(x, y, z, 0, 1);
+  endShape();
+
+  beginShape(QUADS);   
+  texture(right);
+  //right
+  vertex(x+1, y+1, z, 0, 0);
+  vertex(x+1, y+1, z+1, 1, 0);
+  vertex(x+1, y, z+1, 1, 1);
+  vertex(x+1, y, z, 0, 1);
+  endShape();
+}
+
 void drawGround() {
+  noLoop();
   int x = -20, y = -20;
   while (x <= 20) {
-    blocks(x, 1, y, netheriteblock);
+    blocks(x, 2, y, netheriteblock);
     x = x + 1;
     if (x >= 20) {
       y = y + 1;
-      x = 0;
+      x = -20;
     }
-    if (y-1 >= 20) break;
+    if (y >= 20) break;
   }
 }
 
